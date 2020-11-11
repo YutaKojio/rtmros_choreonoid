@@ -52,6 +52,7 @@ class JAXON_RED_HrpsysConfigurator(ChoreonoidHrpsysConfigurator):
         # Latter four 0.0 are for hands.
         self.seq_svc.setJointAngles(self.jaxonResetPose()+[0.0, 0.0, 0.0, 0.0] , 1.0)
         self.abc_svc.startAutoBalancer(['rleg','lleg'])
+        time.sleep(1)
         self.abc_svc.startStabilizer()
 
 if __name__ == '__main__':
