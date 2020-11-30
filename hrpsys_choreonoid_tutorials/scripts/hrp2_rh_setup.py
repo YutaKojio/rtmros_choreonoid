@@ -118,7 +118,9 @@ class JSKHRP2ChoreonoidHrpsysConfigurator(JSKHRP2HrpsysConfigurator):
             self.rh_svc.setServoGainPercentage("RLEG_JOINT6", 30.0)
             self.rh_svc.setServoGainPercentage("LLEG_JOINT6", 30.0)
         ###
-        self.startAutoBalancer()
+        # self.startAutoBalancer()
+        self.seq_svc.setJointAngles(self.hrp2ResetPose(), 1.0)
+        self.abc_svc.startAutoBalancer(['rleg','lleg'])
         self.ic_svc.startImpedanceController("larm")
         self.ic_svc.startImpedanceController("rarm")
         self.startStabilizer()
@@ -135,6 +137,8 @@ if __name__ == '__main__':
     hcf = JSKHRP2ChoreonoidHrpsysConfigurator(robot_name)
     if len(sys.argv) > 2 :
         hcf.init(sys.argv[1], sys.argv[2])
+        hcf.rh_svc.power("all", OpenHRP.RobotHardwareService.SWITCH_ON)
+        hcf.rh_svc.servo("all", OpenHRP.RobotHardwareService.SWITCH_ON)
         hcf.startABSTIMP()
     elif len(sys.argv) > 1 :
         hcf.init(sys.argv[1])
